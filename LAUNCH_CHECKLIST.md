@@ -13,7 +13,7 @@
 - [x] Submission copy
 - [x] Demo script
 - [x] Public GitHub repository
-- [ ] Demo video link
+- [x] Demo video file
 - [ ] DoraHacks submission form
 
 ## Optional Strong Add-Ons
@@ -47,7 +47,7 @@ https://github.com/Vt01nft/pharos-trustrail
 Demo video:
 
 ```text
-<Video URL>
+demo/pharos-trustrail-demo.mp4
 ```
 
 Short description:

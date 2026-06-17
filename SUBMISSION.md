@@ -64,6 +64,16 @@ npm run test
 
 https://github.com/Vt01nft/pharos-trustrail
 
+## Demo Video
+
+Local file: `demo/pharos-trustrail-demo.mp4`
+
+Recommended upload title:
+
+```text
+Pharos TrustRail - Compliance Gateway Skill Demo
+```
+
 ## Validation
 
 - 8 automated tests

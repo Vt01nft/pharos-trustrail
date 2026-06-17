@@ -4,6 +4,8 @@ Pharos TrustRail is a compliance-aware action gateway Skill for autonomous agent
 
 Repository: https://github.com/Vt01nft/pharos-trustrail
 
+Demo video file: `demo/pharos-trustrail-demo.mp4`
+
 It gives every agent a policy preflight before it moves value:
 
 - x402-style payment and service-access checks
