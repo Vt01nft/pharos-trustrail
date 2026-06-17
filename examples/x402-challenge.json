@@ -1,0 +1,14 @@
+{
+  "policyId": "pharos-realfi-agent-v1",
+  "agentId": "agent-steward-01",
+  "resource": "https://api.example.com/alpha/report",
+  "idempotencyKey": "alpha-report-2026-06-17-agent-steward-01",
+  "action": {
+    "action": "x402_payment",
+    "amountUsd": 42,
+    "asset": "USDC",
+    "recipientId": "atlas-data",
+    "purpose": "Buy API access",
+    "credentials": ["zk_kyc", "aml_screen", "agent_mandate_signature"]
+  }
+}

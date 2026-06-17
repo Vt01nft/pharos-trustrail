@@ -1,0 +1,22 @@
+{
+  "schema": "pharos.skill.v1",
+  "name": "pharos-trustrail",
+  "version": "0.1.0",
+  "title": "Pharos TrustRail",
+  "description": "Compliance-aware action gateway Skill for autonomous agents transacting in RealFi on Pharos.",
+  "chainIds": [1672, 688689],
+  "runtime": {
+    "language": "typescript",
+    "command": "npm run skill --"
+  },
+  "schemas": {
+    "input": "schemas/trustrail-tools.schema.json"
+  },
+  "tools": [
+    "trustrail_policy_manifest",
+    "trustrail_preflight",
+    "trustrail_attach_transaction",
+    "trustrail_verify_receipt",
+    "trustrail_x402_challenge"
+  ]
+}

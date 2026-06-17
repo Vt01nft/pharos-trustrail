@@ -1,0 +1,12 @@
+{
+  "policyId": "pharos-realfi-agent-v1",
+  "agentId": "agent-steward-01",
+  "action": {
+    "action": "stablecoin_settlement",
+    "amountUsd": 600,
+    "asset": "USDC",
+    "recipientId": "shadow-vault",
+    "purpose": "Attempted settlement to a blocked bridge address.",
+    "credentials": ["agent_mandate_signature"]
+  }
+}

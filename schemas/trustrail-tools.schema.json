@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pharos-trustrail.local/schemas/trustrail-tools.schema.json",
+  "title": "Pharos TrustRail Tool Inputs",
+  "definitions": {
+    "credential": {
+      "type": "string",
+      "enum": ["zk_kyc", "aml_screen", "agent_mandate_signature", "travel_rule_attestation"]
+    },
+    "action": {
+      "type": "object",
+      "required": ["action", "amountUsd", "asset", "recipientId", "purpose", "credentials"],
+      "properties": {
+        "action": {
+          "type": "string",
+          "enum": ["x402_payment", "rwa_purchase", "stablecoin_settlement", "treasury_payout", "contract_interaction"]
+        },
+        "amountUsd": { "type": "number", "minimum": 0 },
+        "asset": { "type": "string", "minLength": 1 },
+        "recipientId": { "type": "string", "minLength": 1 },
+        "purpose": { "type": "string", "minLength": 1, "maxLength": 500 },
+        "contractAddress": { "type": "string" },
+        "credentials": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/credential" }
+        }
+      }
+    },
+    "preflightInput": {
+      "type": "object",
+      "required": ["policyId", "agentId", "action"],
+      "properties": {
+        "policyId": { "type": "string" },
+        "agentId": { "type": "string" },
+        "action": { "$ref": "#/definitions/action" }
+      }
+    },
+    "x402ChallengeInput": {
+      "allOf": [
+        { "$ref": "#/definitions/preflightInput" },
+        {
+          "type": "object",
+          "required": ["resource", "idempotencyKey"],
+          "properties": {
+            "resource": { "type": "string", "format": "uri" },
+            "idempotencyKey": { "type": "string", "minLength": 8 }
+          }
+        }
+      ]
+    }
+  }
+}
