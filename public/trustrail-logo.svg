@@ -1,0 +1,20 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" rx="144" fill="#F5F7F2"/>
+  <path d="M512 142L766 246V424C766 607 660 760 512 842C364 760 258 607 258 424V246L512 142Z" fill="#16241E"/>
+  <path d="M512 194L713 276V424C713 570 632 697 512 770C392 697 311 570 311 424V276L512 194Z" fill="#EAF4EC"/>
+  <path d="M512 250L642 308V423C642 529 591 624 512 690C433 624 382 529 382 423V308L512 250Z" fill="#117B52"/>
+  <path d="M454 581H570L610 682H414L454 581Z" fill="#16241E"/>
+  <path d="M476 355H548L570 581H454L476 355Z" fill="#F5F7F2"/>
+  <path d="M462 355H562L544 300H480L462 355Z" fill="#16241E"/>
+  <path d="M492 300H532V241H492V300Z" fill="#117B52"/>
+  <path d="M394 404L256 356L394 308V404Z" fill="#D7A83F"/>
+  <path d="M630 404L768 356L630 308V404Z" fill="#D7A83F"/>
+  <path d="M471 446H553" stroke="#16241E" stroke-width="26" stroke-linecap="round"/>
+  <path d="M462 520H562" stroke="#16241E" stroke-width="26" stroke-linecap="round"/>
+  <path d="M340 765C416 729 467 715 512 715C557 715 608 729 684 765" stroke="#0E6F7C" stroke-width="32" stroke-linecap="round"/>
+  <path d="M376 842C432 806 475 792 512 792C549 792 592 806 648 842" stroke="#0E6F7C" stroke-width="32" stroke-linecap="round"/>
+  <circle cx="512" cy="715" r="18" fill="#D7A83F"/>
+  <circle cx="340" cy="765" r="14" fill="#0E6F7C"/>
+  <circle cx="684" cy="765" r="14" fill="#0E6F7C"/>
+  <text x="512" y="936" text-anchor="middle" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="70" font-weight="800" fill="#16241E">Pharos TrustRail</text>
+</svg>
