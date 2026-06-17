@@ -2,6 +2,8 @@
 
 Pharos TrustRail is a compliance-aware action gateway Skill for autonomous agents transacting in RealFi on Pharos.
 
+Repository: https://github.com/Vt01nft/pharos-trustrail
+
 It gives every agent a policy preflight before it moves value:
 
 - x402-style payment and service-access checks

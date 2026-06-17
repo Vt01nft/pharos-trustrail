@@ -60,6 +60,10 @@ npm run skill -- trustrail_x402_challenge @examples/x402-challenge.json
 npm run test
 ```
 
+## Repository
+
+https://github.com/Vt01nft/pharos-trustrail
+
 ## Validation
 
 - 8 automated tests

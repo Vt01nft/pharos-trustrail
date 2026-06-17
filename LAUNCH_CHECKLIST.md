@@ -12,7 +12,7 @@
 - [x] README
 - [x] Submission copy
 - [x] Demo script
-- [ ] Public GitHub repository
+- [x] Public GitHub repository
 - [ ] Demo video link
 - [ ] DoraHacks submission form
 
@@ -41,7 +41,7 @@ Compliance-aware action gateway Skill for autonomous RealFi agents on Pharos.
 Repository:
 
 ```text
-<GitHub URL>
+https://github.com/Vt01nft/pharos-trustrail
 ```
 
 Demo video:
