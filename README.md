@@ -13,7 +13,7 @@ It gives every agent a policy preflight before it moves value:
 - mock zk-KYC, AML, mandate, and travel-rule credential gates
 - deterministic compliance receipt hashes
 - CLI Skill tools that agents can call directly
-- SDK-shaped client, optional operator console, and a minimal on-chain receipt registry contract
+- SDK-shaped client and a minimal on-chain receipt registry contract
 
 ## Why This Matters
 
@@ -34,10 +34,10 @@ Pharos is positioning around RealFi, institutional-grade assets, stablecoins, cr
 
 ```bash
 npm install
-npm run dev
+npm run skill -- list
 ```
 
-The UI is optional. The Skill interface is the primary deliverable:
+The Skill interface is the primary deliverable:
 
 ```bash
 npm run skill -- list
@@ -88,7 +88,7 @@ const decision = await trustRail.preflight({
 - Replace mock credentials with Pharos ZK-KYC/AML attestations when available.
 - Route x402 `/verify` and `/settle` calls through TrustRail preflight.
 - Store receipt hashes in `contracts/TrustRailRegistry.sol` on Pharos.
-- Package `src/trustrailClient.ts` as a Skill/MCP adapter for Agent Center and Anvita Flow agents.
+- Package `src/skill.ts` as an MCP adapter for Agent Center and Anvita Flow agents.
 
 ## Judging Criteria
 

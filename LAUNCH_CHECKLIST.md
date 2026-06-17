@@ -14,6 +14,7 @@
 - [x] Demo script
 - [x] Public GitHub repository
 - [x] Demo video file
+- [x] Logo assets
 - [ ] DoraHacks submission form
 
 ## Optional Strong Add-Ons

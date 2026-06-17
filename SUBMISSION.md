@@ -80,7 +80,7 @@ Pharos TrustRail - Compliance Gateway Skill Demo
 - Direct CLI Skill calls verified
 - Lint passes
 - Production build passes
-- Optional operator console runs locally
+- Demo video and generated logo assets included
 
 ## Future Work
 

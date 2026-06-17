@@ -100,6 +100,6 @@ npm run skill -- trustrail_x402_challenge '{
 - stablecoin payroll / invoice settlement
 - blocked counterparty settlement
 
-## Optional Console
+## Repository Shape
 
-The React console in `src/App.tsx` is only an operator surface for demos and policy review. The Skill interface above is the core deliverable.
+The repository is intentionally Skill-first: runtime, schemas, examples, tests, docs, logo assets, demo video, and a minimal Pharos receipt registry contract.
