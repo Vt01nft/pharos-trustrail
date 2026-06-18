@@ -15,11 +15,14 @@
 - [x] Public GitHub repository
 - [x] Demo video file
 - [x] Logo assets
+- [x] Signed receipt issuer/verifier flow
+- [x] Signing-path SDK guard
+- [x] `TrustRailRegistryV2` authenticated registry contract
 - [ ] DoraHacks submission form
 
 ## Optional Strong Add-Ons
 
-- [ ] Deploy `TrustRailRegistry.sol` to Pharos Atlantic testnet
+- [ ] Deploy `TrustRailRegistryV2.sol` to Pharos Atlantic testnet
 - [ ] Add MCP stdio wrapper
 - [ ] Add OpenAI function-calling wrapper
 - [ ] Add real Pharos RPC receipt lookup
@@ -54,5 +57,5 @@ demo/pharos-trustrail-demo.mp4
 Short description:
 
 ```text
-Pharos TrustRail lets AI agents run policy preflight before moving value. It checks agent identity, asset, amount, counterparty, jurisdiction, credentials, and policy, then returns ALLOW, WARN, or BLOCK with a verifiable compliance receipt.
+Pharos TrustRail lets AI agents run policy preflight before moving value. It checks agent identity, asset, amount, counterparty, jurisdiction, credentials, and policy, then returns ALLOW, WARN, or BLOCK with an issuer-signed compliance receipt that can be enforced before wallet signing and registered on-chain.
 ```

@@ -52,6 +52,7 @@ export type PreflightAction = {
   recipientId: string
   purpose: string
   contractAddress?: string
+  calldataHash?: `0x${string}`
   credentials: CredentialKind[]
 }
 
@@ -88,6 +89,17 @@ export type ComplianceReceipt = {
   txHash?: string
   status: 'preflight' | 'broadcast' | 'confirmed' | 'failed'
   receiptHash: string
+}
+
+export type SignedComplianceReceipt = ComplianceReceipt & {
+  issuer: `0x${string}`
+  agentWallet: `0x${string}`
+  chainId: number
+  issuedAt: number
+  expiresAt: number
+  nonce: string
+  signature: `0x${string}`
+  typedDataHash: `0x${string}`
 }
 
 export const pharosChain = {
@@ -279,7 +291,11 @@ export async function evaluatePreflight(
 
   if (decision !== 'BLOCK') {
     safeExecutionPlan.push('Simulate transaction and estimate gas on Pharos before signing.')
-    safeExecutionPlan.push('Bind user mandate, policy id, and calldata hash into the receipt.')
+    safeExecutionPlan.push(
+      action.calldataHash
+        ? 'Verify transaction calldata hash against the receipt before signing.'
+        : 'Bind user mandate, policy id, target, and amount into the receipt before signing.',
+    )
     safeExecutionPlan.push('Broadcast only after receipt hash is created and stored by the caller.')
   } else {
     safeExecutionPlan.push('Do not sign or broadcast. Escalate policy failure with evidence.')
@@ -310,22 +326,31 @@ export async function attachTransaction(
   txHash: string,
   status: ComplianceReceipt['status'] = 'broadcast',
 ): Promise<ComplianceReceipt> {
-  const next = {
-    ...receipt,
+  const next: ComplianceReceipt = {
+    id: receipt.id,
+    policyId: receipt.policyId,
+    agentId: receipt.agentId,
+    action: receipt.action,
+    counterparty: receipt.counterparty,
+    decision: receipt.decision,
+    reasonCodes: receipt.reasonCodes,
+    requiredProofs: receipt.requiredProofs,
+    safeExecutionPlan: receipt.safeExecutionPlan,
+    timestamp: receipt.timestamp,
     txHash,
     status,
+    receiptHash: '',
   }
 
   return {
     ...next,
-    receiptHash: await hashReceipt({ ...next, receiptHash: undefined }),
+    receiptHash: await hashReceipt(receiptHashPayload(next)),
   }
 }
 
 export async function verifyReceipt(receipt: ComplianceReceipt): Promise<boolean> {
-  const { receiptHash, ...rest } = receipt
-  const expected = await hashReceipt(rest)
-  return expected === receiptHash
+  const expected = await hashReceipt(receiptHashPayload(receipt))
+  return expected === receipt.receiptHash
 }
 
 export function createSdkSnippet(policy: Policy, agent: AgentProfile, action: PreflightAction) {
@@ -357,7 +382,7 @@ export function createPolicyManifest(policy: Policy) {
     policy,
     registry: {
       chainId: pharosChain.chainId,
-      receiptContract: '0xTru57Ra1100000000000000000000000000001672',
+      receiptContract: 'TrustRailRegistryV2',
     },
   }
 }
@@ -408,6 +433,23 @@ async function hashReceipt(value: unknown) {
   return `0x${Array.from(new Uint8Array(digest))
     .map((byte) => byte.toString(16).padStart(2, '0'))
     .join('')}`
+}
+
+function receiptHashPayload(receipt: ComplianceReceipt) {
+  return {
+    id: receipt.id,
+    policyId: receipt.policyId,
+    agentId: receipt.agentId,
+    action: receipt.action,
+    counterparty: receipt.counterparty,
+    decision: receipt.decision,
+    reasonCodes: receipt.reasonCodes,
+    requiredProofs: receipt.requiredProofs,
+    safeExecutionPlan: receipt.safeExecutionPlan,
+    timestamp: receipt.timestamp,
+    txHash: receipt.txHash,
+    status: receipt.status,
+  }
 }
 
 function stableStringify(value: unknown): string {

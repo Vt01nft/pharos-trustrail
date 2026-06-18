@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest'
+import { privateKeyToAccount } from 'viem/accounts'
 import { callTrustRailTool } from './skill'
 import type { ComplianceReceipt } from './trustrail'
+
+const testIssuerPrivateKey =
+  '0x59c6995e998f97a5a0044976f5585b7d3c91a44b820f8b9e0000000000000001' as const
+const testIssuer = privateKeyToAccount(testIssuerPrivateKey).address
 
 describe('TrustRail Skill tools', () => {
   it('exposes a policy manifest callable by agents', async () => {
@@ -60,5 +65,53 @@ describe('TrustRail Skill tools', () => {
 
     expect(result.challenge.headers['X-TrustRail-Policy']).toBe('pharos-realfi-agent-v1')
     expect(result.challenge.receiptHash).toMatch(/^0x[a-f0-9]{64}$/)
+  })
+
+  it('runs the signed receipt, registry, and signing-path guard tools', async () => {
+    const preflight = await callTrustRailTool('trustrail_preflight', {
+      policyId: 'pharos-realfi-agent-v1',
+      agentId: 'agent-steward-01',
+      action: {
+        action: 'x402_payment',
+        amountUsd: 42,
+        asset: 'USDC',
+        recipientId: 'atlas-data',
+        purpose: 'Buy API access',
+        credentials: ['zk_kyc', 'aml_screen', 'agent_mandate_signature'],
+      },
+    })
+
+    const signed = await callTrustRailTool('trustrail_sign_receipt', {
+      receipt: preflight.receipt,
+      issuerPrivateKey: testIssuerPrivateKey,
+      expiresInSeconds: 120,
+      nonce: 'skill-flow-001',
+    })
+
+    const verified = await callTrustRailTool('trustrail_verify_signed_receipt', {
+      signedReceipt: signed.signedReceipt,
+      authorizedIssuers: [testIssuer],
+    })
+
+    const guarded = await callTrustRailTool('trustrail_guard_transaction', {
+      signedReceipt: signed.signedReceipt,
+      tx: {
+        from: signed.signedReceipt.agentWallet,
+        to: signed.signedReceipt.counterparty.address,
+        chainId: signed.signedReceipt.chainId,
+        valueUsd: signed.signedReceipt.action.amountUsd,
+      },
+      authorizedIssuers: [testIssuer],
+    })
+
+    const registry = await callTrustRailTool('trustrail_registry_v2_input', {
+      signedReceipt: signed.signedReceipt,
+    })
+
+    expect(signed.signedReceipt.issuer).toBe(testIssuer)
+    expect(verified.valid).toBe(true)
+    expect(guarded.allowed).toBe(true)
+    expect(registry.contract).toBe('TrustRailRegistryV2.recordSignedReceipt')
+    expect(registry.input.receiptHash).toBe(signed.signedReceipt.receiptHash)
   })
 })

@@ -20,6 +20,10 @@
         "recipientId": { "type": "string", "minLength": 1 },
         "purpose": { "type": "string", "minLength": 1, "maxLength": 500 },
         "contractAddress": { "type": "string" },
+        "calldataHash": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$"
+        },
         "credentials": {
           "type": "array",
           "items": { "$ref": "#/definitions/credential" }
@@ -47,6 +51,113 @@
           }
         }
       ]
+    },
+    "address": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{40}$"
+    },
+    "hex": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]*$"
+    },
+    "receipt": {
+      "type": "object",
+      "description": "TrustRail compliance receipt returned by trustrail_preflight or trustrail_attach_transaction."
+    },
+    "signedReceipt": {
+      "type": "object",
+      "description": "EIP-712 signed TrustRail receipt returned by trustrail_sign_receipt."
+    },
+    "attachTransactionInput": {
+      "type": "object",
+      "required": ["receipt", "txHash"],
+      "properties": {
+        "receipt": { "$ref": "#/definitions/receipt" },
+        "txHash": { "type": "string", "minLength": 3 },
+        "status": {
+          "type": "string",
+          "enum": ["broadcast", "confirmed", "failed"],
+          "default": "confirmed"
+        }
+      }
+    },
+    "verifyReceiptInput": {
+      "type": "object",
+      "required": ["receipt"],
+      "properties": {
+        "receipt": { "$ref": "#/definitions/receipt" }
+      }
+    },
+    "signReceiptInput": {
+      "type": "object",
+      "required": ["receipt"],
+      "properties": {
+        "receipt": { "$ref": "#/definitions/receipt" },
+        "agentWallet": { "$ref": "#/definitions/address" },
+        "issuerPrivateKey": {
+          "type": "string",
+          "pattern": "^0x[a-fA-F0-9]{64}$"
+        },
+        "chainId": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "expiresInSeconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "verifySignedReceiptInput": {
+      "type": "object",
+      "required": ["signedReceipt"],
+      "properties": {
+        "signedReceipt": { "$ref": "#/definitions/signedReceipt" },
+        "authorizedIssuers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/address" }
+        }
+      }
+    },
+    "guardTransactionInput": {
+      "type": "object",
+      "required": ["signedReceipt", "tx"],
+      "properties": {
+        "signedReceipt": { "$ref": "#/definitions/signedReceipt" },
+        "tx": {
+          "type": "object",
+          "required": ["from", "to", "chainId"],
+          "properties": {
+            "from": { "$ref": "#/definitions/address" },
+            "to": { "$ref": "#/definitions/address" },
+            "chainId": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "valueUsd": {
+              "type": "number",
+              "minimum": 0
+            },
+            "data": { "$ref": "#/definitions/hex" }
+          }
+        },
+        "authorizedIssuers": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/address" }
+        },
+        "allowWarn": { "type": "boolean" }
+      }
+    },
+    "registryV2Input": {
+      "type": "object",
+      "required": ["signedReceipt"],
+      "properties": {
+        "signedReceipt": { "$ref": "#/definitions/signedReceipt" }
+      }
     }
   }
 }

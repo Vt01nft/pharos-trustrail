@@ -17,6 +17,10 @@
     "trustrail_preflight",
     "trustrail_attach_transaction",
     "trustrail_verify_receipt",
-    "trustrail_x402_challenge"
+    "trustrail_x402_challenge",
+    "trustrail_sign_receipt",
+    "trustrail_verify_signed_receipt",
+    "trustrail_guard_transaction",
+    "trustrail_registry_v2_input"
   ]
 }

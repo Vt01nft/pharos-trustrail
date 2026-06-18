@@ -10,7 +10,7 @@ Target length: 2 to 3 minutes.
 
 Open `SKILL.md` and `skill.json`.
 
-"This is not just a dashboard. The core deliverable is a reusable Skill with five callable tools: policy manifest, preflight, attach transaction, verify receipt, and x402 challenge."
+"This is not just a dashboard. The core deliverable is a reusable Skill with nine callable tools: policy manifest, preflight, attach transaction, verify receipt, x402 challenge, signed receipt issuance, signed receipt verification, signing-path guard, and registry V2 input."
 
 Run:
 
@@ -72,12 +72,23 @@ Point out:
 - TrustRail receipt headers
 - Pharos chain ID
 
-## 2:10 - On-Chain Integration
+## 2:10 - Signed Receipt Enforcement
 
-Open `contracts/TrustRailRegistry.sol`.
+"A receipt is not enough unless counterparties can prove who issued it and wallets can enforce it before signing. TrustRail signs the receipt with EIP-712, verifies the issuer, and blocks transactions that do not match the approved action."
 
-"After execution, agents can attach a Pharos transaction hash and register the receipt hash on-chain. This gives operators an audit trail without storing raw PII."
+Point out:
 
-## 2:30 - Close
+- `trustrail_sign_receipt`
+- `trustrail_verify_signed_receipt`
+- `trustrail_guard_transaction`
+- BLOCK and mismatched transactions fail before wallet send
 
-"TrustRail is the control plane before agent financial execution. It makes payment, escrow, RWA, invoice, and contract Skills safer, composable, and ready for Pharos' AI Agent economy."
+## 2:35 - On-Chain Integration
+
+Open `contracts/TrustRailRegistryV2.sol`.
+
+"After execution, agents can attach a Pharos transaction hash and register the signed receipt on-chain. The V2 registry checks issuer authorization, expiry, chain id, duplicate receipt hashes, and who is allowed to submit for the agent wallet."
+
+## 2:55 - Close
+
+"TrustRail is the control plane before agent financial execution. It makes payment, escrow, RWA, invoice, and contract Skills safer, composable, enforceable, and ready for Pharos' AI Agent economy."
